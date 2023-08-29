@@ -40,6 +40,11 @@ export class RectangularBoxMarkerBase extends MarkerBase {
   protected defaultSize: IPoint = {x: 50, y: 20};
 
   /**
+   * The minimum marker size, before marker is resized to the default size.
+   */
+  protected minSize = 2;
+
+  /**
    * x coordinate of the top-left corner at the start of manipulation.
    */
   protected manipulationStartLeft: number;
@@ -213,7 +218,7 @@ export class RectangularBoxMarkerBase extends MarkerBase {
   public pointerUp(point: IPoint): void {
     const inState = this.state;
     super.pointerUp(point);
-    if (this.state === 'creating' && this.width < 10 && this.height < 10) {
+    if (this.state === 'creating' && this.width < this.minSize && this.height < this.minSize) {
       this.width = this.defaultSize.x;
       this.height = this.defaultSize.y;
     } else {
